@@ -1,2 +1,40 @@
+#include <winver.h>
+
+// English (United Kingdom), 0x0809: LANG_ENGLISH, SUBLANG_ENGLISH_UK
+LANGUAGE 0x09, 0x02
+
+// Version shown in the exe's Properties > Details. Bump both lines together.
+#define VER_NUM 1,0,0,0
+#define VER_STR "1.0"
+
 // First icon resource is the one Explorer shows for the exe.
 1 ICON "lcdyoutube.ico"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_NUM
+PRODUCTVERSION  VER_NUM
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     0
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080904b0"
+        BEGIN
+            VALUE "CompanyName",      "Bassquake"
+            VALUE "FileDescription",  "LCDYouTube - YouTube player for Logitech LCD Manager"
+            VALUE "FileVersion",      VER_STR
+            VALUE "InternalName",     "LCDYouTube"
+            VALUE "LegalCopyright",   "Copyright (C) 2026 Bassquake"
+            VALUE "OriginalFilename", "LCDYouTube.exe"
+            VALUE "ProductName",      "LCDYouTube"
+            VALUE "ProductVersion",   VER_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x809, 1200
+    END
+END
