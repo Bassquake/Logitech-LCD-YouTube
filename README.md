@@ -1,7 +1,7 @@
 # LCDYouTube
 
 A replacement for Logitech's **LCD Video Player for YouTube** (`LCDYouTube.exe`) on 320x240 colour
-LCDs driven by GamePanel LCD Manager (SpacePilot Pro, G19).
+LCDs driven by GamePanel LCD Manager for 3DConnexion or Logitech devices such as SpacePilot Pro or G19.
 
 ## Why the original stopped working
 
