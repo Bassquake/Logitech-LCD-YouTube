@@ -10,7 +10,7 @@ import numpy as np
 
 from lcd import WIDTH, HEIGHT, FRAME_BYTES
 
-log = logging.getLogger('lcdtube.player')
+log = logging.getLogger('lcdyoutube.player')
 
 FPS = 25
 RATE = 48000

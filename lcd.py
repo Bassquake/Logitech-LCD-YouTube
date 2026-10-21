@@ -4,7 +4,7 @@ import logging
 import os
 import time
 
-log = logging.getLogger('lcdtube.lcd')
+log = logging.getLogger('lcdyoutube.lcd')
 
 WIDTH, HEIGHT = 320, 240
 FRAME_BYTES = WIDTH * HEIGHT * 4

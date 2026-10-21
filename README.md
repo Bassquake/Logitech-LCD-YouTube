@@ -1,4 +1,4 @@
-# LCDTube
+# LCDYouTube
 
 A replacement for Logitech's **LCD Video Player for YouTube** (`LCDYouTube.exe`) on 320x240 colour
 LCDs driven by GamePanel LCD Manager (SpacePilot Pro, G19).
@@ -15,7 +15,7 @@ Analysis of the original `LCDYouTube.exe` (build 2021.2.2, x86 MFC; kept here as
 * **Playback** hosts the **Flash ActiveX** control running YouTube's AS3 `apiplayer` SWF and drives it
   with `<invoke name=...>` calls. Flash is gone from Windows and the SWF player no longer exists.
 
-Both back ends are gone, so patching the exe can't bring playback back. LCDTube replaces it.
+Both back ends are gone, so patching the exe can't bring playback back. LCDYouTube replaces it.
 
 ## How it works
 
@@ -25,7 +25,7 @@ Both back ends are gone, so patching the exe can't bring playback back. LCDTube 
 * `player.py`: yt-dlp lists searches/channels/playlists and resolves streams (≤360p H.264 + AAC).
   One ffmpeg process decodes video straight to 320x240 BGRA frames and another decodes audio to PCM,
   which plays through `sounddevice`. Audio is the clock, so video frames follow it.
-* `lcdtube.pyw`: the LCD UI (feed menu, video list with thumbnails, player) and a clipboard watcher.
+* `lcdyoutube.pyw`: the LCD UI (feed menu, video list with thumbnails, player) and a clipboard watcher.
 
 ## Requirements
 
@@ -39,12 +39,12 @@ YouTube changes often.
 
 ## Use
 
-1. Run `install.cmd`. It installs the Python packages and writes `%APPDATA%\LCDTube\LCDTube.ini`
-   (`home=` Python install, `script=` path to `lcdtube.pyw`). Because of that file, `LCDYouTube.exe`
-   (the LCDTube launcher) works from any folder.
+1. Run `install.cmd`. It installs the Python packages and writes `%APPDATA%\LCDYouTube\LCDYouTube.ini`
+   (`home=` Python install, `script=` path to `lcdyoutube.pyw`). Because of that file, `LCDYouTube.exe`
+   (the launcher) works from any folder.
 2. Copy `LCDYouTube.exe` into `C:\Program Files\Logitech\GamePanel Software\LCD Manager\Applets`.
    LCD Manager launches every exe in that folder when it starts (at login), as it does for the stock
-   applets. LCDTube sits idle until you select it on the LCD.
+   applets. LCDYouTube sits idle until you select it on the LCD.
    This replaces Logitech's dead `LCDYouTube.exe` of the same name.
 
 | Button | Menu / list          | Playing                         |
@@ -57,12 +57,12 @@ YouTube changes often.
 | Menu   | go to now-playing    | back to browser (keeps playing) |
 
 **Clipboard** (like the original): copy a YouTube video link and it plays. Copy a playlist link and it
-opens as a list. Copy `lcdtube:search=your words` (or the old `lcdyoutube:search=`) to search.
+opens as a list. Copy `lcdyoutube:search=your words` to search (same command as the original applet).
 
 ## Config
 
-`%APPDATA%\LCDTube\config.json` holds `feeds` (title + URL), `volume`, `items_per_feed`,
+`%APPDATA%\LCDYouTube\config.json` holds `feeds` (title + URL), `volume`, `items_per_feed`,
 `clipboard`, and the play history. A feed URL can be `ytsearch:words`, a channel
 `https://www.youtube.com/@name/videos`, or a playlist URL. Trending isn't included because YouTube
-removed that page. The log is in `%LOCALAPPDATA%\LCDTube\lcdtube.log`. Run with `--debug` to log
+removed that page. The log is in `%LOCALAPPDATA%\LCDYouTube\lcdyoutube.log`. Run with `--debug` to log
 button codes.

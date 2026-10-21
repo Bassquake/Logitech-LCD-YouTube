@@ -1,14 +1,14 @@
 /*
- * LCDYouTube.exe (LCDTube launcher) - hosts Python in-process and runs lcdtube.pyw from the same
+ * LCDYouTube.exe - hosts Python in-process and runs lcdyoutube.pyw from the same
  * folder. LCD Manager records the connecting process's exe as the applet, so
  * this gives it something it can list and autostart (pythonw.exe can't be).
  *
- * Settings come from LCDTube.ini next to the exe, or failing that
- * %APPDATA%\LCDTube\LCDTube.ini (so the exe can be copied anywhere,
+ * Settings come from LCDYouTube.ini next to the exe, or failing that
+ * %APPDATA%\LCDYouTube\LCDYouTube.ini (so the exe can be copied anywhere,
  * e.g. into LCD Manager's Applets folder):
  *     [python]
  *     home=C:\path\to\python
- *     script=C:\path\to\lcdtube\lcdtube.pyw   (default: next to the exe)
+ *     script=C:\path\to\LCDYouTube\lcdyoutube.pyw   (default: next to the exe)
  */
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -19,7 +19,7 @@ typedef int (*Py_MainFn)(int, wchar_t **);
 
 static void fail(const wchar_t *msg)
 {
-    MessageBoxW(NULL, msg, L"LCDTube", MB_ICONERROR);
+    MessageBoxW(NULL, msg, L"LCDYouTube", MB_ICONERROR);
 }
 
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrev, PWSTR cmdLine, int show)
@@ -37,13 +37,13 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrev, PWSTR cmdLine, int show)
     GetModuleFileNameW(NULL, dir, MAX_PATH);
     slash = wcsrchr(dir, L'\\');
     if (slash) slash[1] = 0;
-    swprintf(ini, MAX_PATH, L"%sLCDTube.ini", dir);
+    swprintf(ini, MAX_PATH, L"%sLCDYouTube.ini", dir);
     if (GetFileAttributesW(ini) == INVALID_FILE_ATTRIBUTES) {
         wchar_t appdata[MAX_PATH];
         if (GetEnvironmentVariableW(L"APPDATA", appdata, MAX_PATH))
-            swprintf(ini, MAX_PATH, L"%s\\LCDTube\\LCDTube.ini", appdata);
+            swprintf(ini, MAX_PATH, L"%s\\LCDYouTube\\LCDYouTube.ini", appdata);
     }
-    swprintf(script, MAX_PATH, L"%slcdtube.pyw", dir);
+    swprintf(script, MAX_PATH, L"%slcdyoutube.pyw", dir);
     GetPrivateProfileStringW(L"python", L"script", script, script, MAX_PATH, ini);
 
     if (!GetPrivateProfileStringW(L"python", L"home", L"", home, MAX_PATH, ini) || !home[0]) {
@@ -88,7 +88,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrev, PWSTR cmdLine, int show)
         return 1;
     }
 
-    /* argv: LCDYouTube.exe lcdtube.pyw [extra args...] */
+    /* argv: LCDYouTube.exe lcdyoutube.pyw [extra args...] */
     argv = CommandLineToArgvW(GetCommandLineW(), &argc);
     pyargv = (wchar_t **)LocalAlloc(LPTR, sizeof(wchar_t *) * (argc + 2));
     pyargv[0] = argv[0];

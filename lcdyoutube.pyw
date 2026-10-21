@@ -1,9 +1,9 @@
-"""LCDTube - YouTube browser/player for the 320x240 LCD (SpacePilot Pro / G19)
+"""LCDYouTube - YouTube browser/player for the 320x240 LCD (SpacePilot Pro / G19)
 via Logitech GamePanel LCD Manager. Replaces the dead Logitech LCDYouTube.exe
 (GData v2 API + Flash player, both shut down).
 
-Run with pythonw. Config: %APPDATA%\\LCDTube\\config.json
-Log: %LOCALAPPDATA%\\LCDTube\\lcdtube.log
+Run with pythonw. Config: %APPDATA%\\LCDYouTube\\config.json
+Log: %LOCALAPPDATA%\\LCDYouTube\\lcdyoutube.log
 """
 import ctypes
 import ctypes.wintypes as wt
@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lcd as L  # noqa: E402
 from player import Player, find_ffmpeg, list_feed  # noqa: E402
 
-APP = 'LCDTube'
+APP = 'LCDYouTube'
 CFG_DIR = os.path.join(os.environ.get('APPDATA', '.'), APP)
 LOG_DIR = os.path.join(os.environ.get('LOCALAPPDATA', '.'), APP)
 CFG_PATH = os.path.join(CFG_DIR, 'config.json')
@@ -41,7 +41,7 @@ DEFAULT_CONFIG = {
     ],
 }
 
-log = logging.getLogger('lcdtube')
+log = logging.getLogger('lcdyoutube')
 
 # ---------------------------------------------------------------- drawing
 
@@ -207,7 +207,7 @@ class Menu:
     def render(self):
         img = Image.new('RGB', (W, H), BG)
         d = ImageDraw.Draw(img)
-        header(d, 'YouTube', 'LCDTube')
+        header(d, 'YouTube', 'LCDYouTube')
         items = self.items()
         rows = 9
         top = max(0, min(self.sel - rows // 2, len(items) - rows))
@@ -490,7 +490,7 @@ class App:
 
     def on_clipboard(self, text):
         text = text.strip()
-        if text.lower().startswith(('lcdtube:search=', 'lcdyoutube:search=')):
+        if text.lower().startswith('lcdyoutube:search='):
             q = text.split('=', 1)[1].strip()
             if q:
                 self.stack = [self.stack[0], VideoList(self, f'Search: {q}', url=f'ytsearch:{q}')]
@@ -571,13 +571,13 @@ class App:
 
 
 def single_instance():
-    ctypes.windll.kernel32.CreateMutexW(None, False, 'LCDTube_SingleInstance')
+    ctypes.windll.kernel32.CreateMutexW(None, False, 'LCDYouTube_SingleInstance')
     return ctypes.windll.kernel32.GetLastError() != 183  # ERROR_ALREADY_EXISTS
 
 
 def main():
     os.makedirs(LOG_DIR, exist_ok=True)
-    logging.basicConfig(filename=os.path.join(LOG_DIR, 'lcdtube.log'), level=logging.INFO,
+    logging.basicConfig(filename=os.path.join(LOG_DIR, 'lcdyoutube.log'), level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(name)s: %(message)s')
     if '--debug' in sys.argv:
         logging.getLogger().setLevel(logging.DEBUG)

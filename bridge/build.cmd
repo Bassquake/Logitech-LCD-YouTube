@@ -16,8 +16,8 @@ call "%VS%\VC\Auxiliary\Build\vcvarsall.bat" x64 >nul || exit /b 1
 pushd "%HERE%"
 cl /nologo /O2 /W3 /LD /I"%SDK%\Src" lglcd_bridge.c /Fe:..\lglcd_bridge.dll ^
    /link "%SDK%\Lib\x64\lglcd.lib" user32.lib advapi32.lib ole32.lib || (popd & exit /b 1)
-rem Icon: ..\icon-youtube.png -> lcdtube.ico (16..256 px)
-python -c "from PIL import Image; Image.open(r'..\icon-youtube.png').convert('RGBA').save('lcdtube.ico', sizes=[(s, s) for s in (16, 20, 24, 32, 40, 48, 64, 128, 256)])" || (popd & exit /b 1)
+rem Icon: ..\icon-youtube.png -> lcdyoutube.ico (16..256 px)
+python -c "from PIL import Image; Image.open(r'..\icon-youtube.png').convert('RGBA').save('lcdyoutube.ico', sizes=[(s, s) for s in (16, 20, 24, 32, 40, 48, 64, 128, 256)])" || (popd & exit /b 1)
 rc /nologo /fo launcher.res launcher.rc || (popd & exit /b 1)
 cl /nologo /O2 /W3 /DUNICODE /D_UNICODE launcher.c launcher.res /Fe:..\LCDYouTube.exe ^
    /link /SUBSYSTEM:WINDOWS user32.lib shell32.lib || (popd & exit /b 1)
